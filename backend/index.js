@@ -8,6 +8,8 @@ const dbConnection= require("./database/dbConnection");
 const userRoutes = require("./routes/userRoutes");
 const postRoutes  = require("./routes/postRoutes");
 const authRoutes  = require("./routes/authRoutes");
+const cloudinary  = require("./config/cloudinary");
+cloudinary.cloudinaryconnect();
 app.use(errorMiddleware);
 app.use(express.json());
 app.use("/api/v1/user",userRoutes);
