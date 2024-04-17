@@ -4,11 +4,26 @@ const User = require("../models/userSchema");
 const bcrypt  = require("bcrypt");
 const {sendToken}=require("../utils/jwtToken");
 exports.signUp= catchAsyncError(async(req,res,next)=>{
-        const {firstName,lastName,email,password,picturePath,friends,location,occupation}  = req.body;
-         const isEmailExists= await User.findOne({email});
+        const {firstName,lastName,email,password,friends,location,occupation}  = req.body;
+        if(!req.files || Object.keys(req.files).length ===0)
+           return next(new errorHandler("Resume file required",400));
+        
+        const isEmailExists= await User.findOne({email});
         if(isEmailExists)
         {
             return next(new errorHandler("email already exist"));
+        }
+        const {picture} = req.files;
+        const allowedFormats = ["image/png","image/jpeg","image/webp"];
+        if(!allowedFormats.includes(resume.mimetype))
+                 return next(new errorHandler("Invalid file type. please send resume in PNG , JPG or WEBP format",400));
+        const cloudinaryResponse = await cloudinary.uploader.upload(
+                picture.tempFilePath
+        );
+        if(!cloudinaryResponse || cloudinaryResponse.error)
+        {
+           console.error("Cloudinary Error",cloudinaryResponse.error ||" unknown cloudinary error");
+           return next(new errorHandler("failed to upload image",400));
         }
         const salt = await bcrypt.genSalt();
         const passwordHash = await bcrypt.hash(password,salt);
@@ -17,7 +32,7 @@ exports.signUp= catchAsyncError(async(req,res,next)=>{
             lastName,
             email,
             password:passwordHash,
-            picturePath,
+            picturePath:cloudinaryResponse.secure_url,
             friends,
             location,
             occupation,
