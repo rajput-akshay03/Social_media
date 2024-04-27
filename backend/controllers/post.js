@@ -30,7 +30,7 @@ exports.createPost  = catchAsyncError(async(req,res,next)=>{
               likes:{},
               comments:[]
           })
-        const post = await Post.find();
+        const post = await Post.find().sort({updatedAt:-1});
           return res.status(200).json({
                 success:true,
                 message:"posted successfully",
@@ -38,7 +38,7 @@ exports.createPost  = catchAsyncError(async(req,res,next)=>{
           })
 });
 exports.getFeedPosts= catchAsyncError(async(req,res,next)=>{
-    const post = await Post.find();
+    const post = await Post.find().sort({updatedAt:-1});
     return res.status(200).json({
           success:true,
           post
@@ -47,7 +47,7 @@ exports.getFeedPosts= catchAsyncError(async(req,res,next)=>{
 exports.getUserPosts = catchAsyncError(async(req,res,next)=>{
     const {userId} = req.params;
 
-    const post = await Post.find({userId});
+    const post = await Post.find({userId}).sort({updatedAt:-1});
     return res.status(200).json({
           success:true,
           post
@@ -76,15 +76,18 @@ exports.likePost = catchAsyncError(async(req,res,next)=>{
           updatePost
     })
 });
-// exports.deletePost = catchAsyncError(async(req,res,next)=>{
-//     const {id} = req.params;
-//     //chack here
-//     const posts= await Post.findById(id)
-//     if(!posts)
-//         return next(new errorHandler("post not found"));
-//     await posts.deleteOne();
-//     return res.status(200).json({
-//           success:true,
-//           message:"post deleted succesfully"
-//     })
-// });
+exports.deletePost = catchAsyncError(async(req,res,next)=>{
+    const {id} = req.params;
+    console.log(id);
+    const posts= await Post.findById(id)
+    console.log(posts);
+    if(!posts)
+        return next(new errorHandler("post not found"));
+    await posts.deleteOne();
+    const post = await Post.find().sort({updatedAt:-1});
+    return res.status(200).json({
+          success:true,
+          message:"post deleted succesfully",
+          post
+    })
+});

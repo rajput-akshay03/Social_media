@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   IconButton,
@@ -40,8 +40,14 @@ const Navbar = () => {
   const alt = theme.palette.background.alt;
 
   const fullName = "akshay";
-//   `${user.firstName} ${user.lastName}`;
-
+  const logout = ()=>{
+       dispatch(setLogout());
+        console.log("hr")
+       useEffect(()=>{
+        console.log("hrr")
+         navigate("/hello");
+       },[])
+  }
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
       <FlexBetween gap="1.75rem">
@@ -108,7 +114,7 @@ const Navbar = () => {
               <MenuItem value={fullName}>
                 <Typography>{fullName}</Typography>
               </MenuItem>
-              <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
+              <MenuItem onClick={logout}>Log Out</MenuItem>
             </Select>
           </FormControl>
         </FlexBetween>

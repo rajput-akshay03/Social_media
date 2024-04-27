@@ -7,7 +7,7 @@ import FriendListWidget from "../widgets/FriendList";
 import MyPostWidget from "../widgets/myPostWidget";
 import PostsWidget from "../widgets/postsWidget";
 import UserWidget from "../widgets/userWidget";
-
+import axios from "axios";
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const { userId } = useParams();
@@ -15,12 +15,16 @@ const ProfilePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
   const getUser = async () => {
-    const response = await fetch(`http://localhost:3000/api/v1/users/${userId}`, {
-      method: "GET",
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const data = await response.json();
-    setUser(data);
+    const response = await axios.get(
+      `http://localhost:3000/api/v1/users/${userId}`,
+      {
+        withCredentials: true,
+        headers: {
+          Authorization:`Bearer ${token}`
+        },
+      }
+    )
+    setUser(response.data.user);
   };
 
   useEffect(() => {

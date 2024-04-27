@@ -19,8 +19,8 @@ const AdvertWidget = () => {
       <img
         width="100%"
         height="auto"
+        src="https://www.mrftyres.com/images/banner-five.jpg"
         alt="advert"
-        src="http://localhost:3000/api/v1/assets/info4.jpeg"
         style={{ borderRadius: "0.75rem", margin: "0.75rem 0" }}
       />
       <FlexBetween>

@@ -61,9 +61,8 @@ import {
           },
         }
       )
-      console.log(response);
-      //check
-      const posts = [];
+      const posts = response.data.post;
+      console.log(posts);
       dispatch(setPosts({ posts }));
       setImage(null);
       setPost("");

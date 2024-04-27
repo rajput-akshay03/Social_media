@@ -8,10 +8,6 @@ const PostsWidget = ({ userId, isProfile = false }) => {
   const posts = useSelector((state) => state.posts);
   const token = useSelector((state) => state.token);
   const getPosts = async () => {
-    // const response = await fetch("http://localhost:3000/api/v1/posts", {
-    //   method: "GET",
-    //   headers: { Authorization: `Bearer ${token}` },
-    // });
     const response = await axios.get(
       `http://localhost:3000/api/v1/posts`,
       {
@@ -21,19 +17,10 @@ const PostsWidget = ({ userId, isProfile = false }) => {
         },
       }
     )
-    // const data = await response.json();
-    // console.log(response.data.post)
     dispatch(setPosts({ posts: response.data.post}));
   };
 
   const getUserPosts = async () => {
-    // const response = await fetch(
-    //   `http://localhost:3000/api/v1/posts/${userId}/posts`,
-    //   {
-    //     method: "GET",
-    //     headers: { Authorization: `Bearer ${token}` },
-    //   }
-    // );
     const response = await axios.get(
       `http://localhost:3000/api/v1/posts/${userId}/posts`,
       {
@@ -52,8 +39,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
     } else {
       getPosts();
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
+  }, [posts]);
   return (
     <>
       {posts?posts.map(

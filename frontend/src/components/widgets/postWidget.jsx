@@ -4,6 +4,7 @@ import {
     FavoriteOutlined,
     ShareOutlined,
   } from "@mui/icons-material";
+  import DeleteIcon from '@mui/icons-material/Delete';
   import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
   import FlexBetween from "../styles/FlexBetween";
   import Friend from "../styles/Friend";
@@ -27,21 +28,12 @@ import {
     const dispatch = useDispatch();
     const token = useSelector((state) => state.token);
     const loggedInUserId = useSelector((state) => state.user._id);
-    const isLiked = Boolean(likes[loggedInUserId]);
-    const likeCount = Object.keys(likes).length;
+    const [isLiked,setisLiked]=useState(Boolean(likes[loggedInUserId]));
+    const [likeCount,setlikeCount]= useState( Object.keys(likes).length)
     const { palette } = useTheme();
     const main = palette.neutral.main;
     const primary = palette.primary.main;
-  
     const patchLike = async () => {
-      // const response = await fetch(`http://localhost:3000/api/v1/posts/${postId}/like`, {
-      //   method: "PATCH",
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({ userId: loggedInUserId }),
-      // });
       const response = await axios.patch(
         `http://localhost:3000/api/v1/posts/${postId}/like`,
         {userId: loggedInUserId},
@@ -53,9 +45,34 @@ import {
           },
         }
       )
-     console.log(response);
+      if(isLiked)
+      {
+         setisLiked(false);
+         setlikeCount(likeCount-1);
+      }
+      else{
+        setisLiked(true);
+        setlikeCount(likeCount+1);
+      }
       dispatch(setPost({ post: response.data.updatePost }));
     };
+    const deletePost=async()=>{
+        const check= confirm("Do you want to delete the post?")
+        if(check)
+        {
+          const response = await axios.delete(
+            `http://localhost:3000/api/v1/posts/delete/${postId}`,
+            {
+              withCredentials: true,
+              headers: {
+                "Content-Type":"application/json",
+                Authorization:`Bearer ${token}`
+              },
+            }
+          )
+          dispatch(setPost({ post: response.data.post }));
+        }
+    }
   
     return (
       <WidgetWrapper m="2rem 0">
@@ -95,9 +112,11 @@ import {
                 <ChatBubbleOutlineOutlined />
               </IconButton>
               <Typography>{comments.length}</Typography>
+            <IconButton>
+                 <DeleteIcon onClick={deletePost}/>
+            </IconButton>
             </FlexBetween>
           </FlexBetween>
-  
           <IconButton>
             <ShareOutlined />
           </IconButton>

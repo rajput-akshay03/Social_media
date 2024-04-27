@@ -35,8 +35,7 @@ import {
           },
         }
       )
-      // check
-      setUser(response);
+      setUser(response.data.user);
     };
   
     useEffect(() => {
@@ -49,7 +48,7 @@ import {
       firstName,
       lastName,
       location,
-      occupation,
+      profession,
       viewedProfile,
       impressions,
       friends,
@@ -95,7 +94,7 @@ import {
           </Box>
           <Box display="flex" alignItems="center" gap="1rem">
             <WorkOutlineOutlined fontSize="large" sx={{ color: main }} />
-            <Typography color={medium}>{occupation}</Typography>
+            <Typography color={medium}>{profession}</Typography>
           </Box>
         </Box>
   
@@ -127,7 +126,7 @@ import {
   
           <FlexBetween gap="1rem" mb="0.5rem">
             <FlexBetween gap="1rem">
-              <img src="../assets/twitter.png" alt="twitter" />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Logo_of_Twitter.svg/512px-Logo_of_Twitter.svg.png" alt="twitter" height="30px"/>
               <Box>
                 <Typography color={main} fontWeight="500">
                   Twitter
@@ -140,7 +139,7 @@ import {
   
           <FlexBetween gap="1rem">
             <FlexBetween gap="1rem">
-              <img src="../assets/linkedin.png" alt="linkedin" />
+              <img src="https://play-lh.googleusercontent.com/kMofEFLjobZy_bCuaiDogzBcUT-dz3BBbOrIEjJ-hqOabjK8ieuevGe6wlTD15QzOqw=w600-h300-pc0xffffff-pd" alt="linkedin" height="20px" width="40px"/>
               <Box>
                 <Typography color={main} fontWeight="500">
                   Linkedin
