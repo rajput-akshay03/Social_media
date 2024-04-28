@@ -21,48 +21,47 @@ import {
   import Dropzone from "react-dropzone";
   import UserImage from "../styles/userImage";
   import WidgetWrapper from "../styles/widgetWrapper";
-  import { useState } from "react";
+  import { useEffect, useState } from "react";
   import { useDispatch, useSelector } from "react-redux";
   import { setPosts } from "../../state/index";
   import axios from "axios";
+import { useNavigate } from "react-router-dom";
   const MyPostWidget = ({ picturePath }) => {
     const dispatch = useDispatch();
     const [isImage, setIsImage] = useState(false);
     const [image, setImage] = useState(null);
     const [post, setPost] = useState("");
     const { palette } = useTheme();
-    const { _id } = useSelector((state) => state.user);
-    const token = useSelector((state) => state.token);
+    const navigate=useNavigate();
+    const user = useSelector((state) => state.user);
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
     const mediumMain = palette.neutral.mediumMain;
     const medium = palette.neutral.medium;
-  
+    let _id;
+    if(user)
+      _id = user._id;
+    const token = useSelector((state) => state.token);
+    const handleFileChange = (event) => {
+      const images = event.target.files[0];
+      setImage(images);
+    };
     const handlePost = async () => {
       const formData = new FormData();
       formData.append("userId", _id);
       formData.append("description", post);
-      // if (image) {
-      //   formData.append("picture", image);
-      //   formData.append("picturePath", image.name);
-      // }
-      // const response = await fetch(`http://localhost:3000/api/v1/posts`, {
-      //   method: "POST",
-      //   headers: { Authorization: `Bearer ${token}` },
-      //   body: formData,
-      // });
+      formData.append("picture", image);
       const response = await axios.post(
         `http://localhost:3000/api/v1/posts`,
       formData,
         {
           withCredentials: true,
           headers: {
-            "Content-Type":"application/json",
+            "Content-Type":"multipart/form-data",
             Authorization:`Bearer ${token}`
           },
         }
       )
       const posts = response.data.post;
-      console.log(posts);
       dispatch(setPosts({ posts }));
       setImage(null);
       setPost("");
@@ -91,41 +90,9 @@ import {
             mt="1rem"
             p="1rem"
           >
-            {/* <Dropzone
-              acceptedFiles=".jpg,.jpeg,.png"
-              multiple={false}
-              onDrop={(acceptedFiles) => setImage(acceptedFiles[0])}
-            >
-              {({ getRootProps, getInputProps }) => (
-                <FlexBetween>
-                  <Box
-                    {...getRootProps()}
-                    border={`2px dashed ${palette.primary.main}`}
-                    p="1rem"
-                    width="100%"
-                    sx={{ "&:hover": { cursor: "pointer" } }}
-                  >
-                    <input {...getInputProps()} />
-                    {!image ? (
-                      <p>Add Image Here</p>
-                    ) : (
-                      <FlexBetween>
-                        <Typography>{image.name}</Typography>
-                        <EditOutlined />
-                      </FlexBetween>
-                    )}
-                  </Box>
-                  {image && (
-                    <IconButton
-                      onClick={() => setImage(null)}
-                      sx={{ width: "15%" }}
-                    >
-                      <DeleteOutlined />
-                    </IconButton>
-                  )}
-                </FlexBetween>
-              )}
-            </Dropzone> */}
+            <input  type="file"
+              accept=".pdf, .jpg, .png"
+              onChange={handleFileChange} />
           </Box>
         )}
   

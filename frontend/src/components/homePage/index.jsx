@@ -7,24 +7,26 @@ import PostsWidget from "../widgets/postsWidget";
 import AdvertWidget from "../widgets/AdvertWidget";
 import FriendListWidget from "../widgets/FriendList";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 const HomePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
    const user = useSelector((state) => state.user);
    const navigate = useNavigate();
-   let  _id,picturePath ; 
-   if(!user)
-   {
-     console.log("hello");
-     useEffect(()=>{
-      console.log("akshay")
-       navigate("/");
-     },[])
-   }
-   else{
-     _id=user._id;
-     picturePath=user.picturePath;  
-   }
+ 
+   const [_id,set_id] = useState(null);
+   const [picturePath,setPictruePath]= useState(null);
+   console.log("hey");
+   useEffect(()=>{
+    console.log("hiii");
+     if(!user)
+     {
+          navigate("/");
+     }
+     else{
+       set_id(user._id);
+       setPictruePath(user.picturePath);
+     }
+   },[])
   return (
     <Box>
       <Navbar />

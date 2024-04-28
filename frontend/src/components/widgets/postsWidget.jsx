@@ -8,16 +8,19 @@ const PostsWidget = ({ userId, isProfile = false }) => {
   const posts = useSelector((state) => state.posts);
   const token = useSelector((state) => state.token);
   const getPosts = async () => {
-    const response = await axios.get(
-      `http://localhost:3000/api/v1/posts`,
-      {
-        withCredentials: true,
-        headers: {
-          Authorization:`Bearer ${token}`
-        },
-      }
-    )
-    dispatch(setPosts({ posts: response.data.post}));
+    // useEffect(async()=>{   
+    //   console.log("posts");  
+      const response = await axios.get(
+        `http://localhost:3000/api/v1/posts`,
+        {
+          withCredentials: true,
+          headers: {
+            Authorization:`Bearer ${token}`
+          },
+        }
+      )
+      dispatch(setPosts({ posts: response.data.post}));
+    // },[])
   };
 
   const getUserPosts = async () => {
@@ -35,6 +38,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
 
   useEffect(() => {
     if (isProfile) {
+      // if(userId)
       getUserPosts();
     } else {
       getPosts();
@@ -66,6 +70,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
             userPicturePath={userPicturePath}
             likes={likes}
             comments={comments}
+            isProfile={isProfile}
           />
         )
       ):<div></div>}

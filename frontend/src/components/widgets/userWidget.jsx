@@ -20,12 +20,8 @@ import {
     const dark = palette.neutral.dark;
     const medium = palette.neutral.medium;
     const main = palette.neutral.main;
-  
     const getUser = async () => {
-      // const response = await fetch(`http://localhost:3000/api/v1/users/${userId}`, {
-      //   method: "GET",
-      //   headers: { Authorization: `Bearer ${token}` },
-      // });
+      console.log("heylo");
       const response = await axios.get(
         `http://localhost:3000/api/v1/users/${userId}`,
         {
@@ -35,35 +31,38 @@ import {
           },
         }
       )
+      console.log(response);
       setUser(response.data.user);
     };
   
     useEffect(() => {
+      if(userId)
       getUser();
-    }, []); 
+    }, [userId]); 
     if (!user) {
       return null;
     } 
-    const {
-      firstName,
-      lastName,
-      location,
-      profession,
-      viewedProfile,
-      impressions,
-      friends,
-    } = user;
+    // const {
+    //   firstName,
+    //   lastName,
+    //   location,
+    //   profession,
+    //   viewedProfile,
+    //   impressions,
+    //   friends,
+    // } = user;
   
     return (
       <WidgetWrapper>
         {/* FIRST ROW */}
+        <div>akshay</div>
         <FlexBetween
           gap="0.5rem"
           pb="1.1rem"
           onClick={() => navigate(`/profile/${userId}`)}
         >
           <FlexBetween gap="1rem">
-            <UserImage image={picturePath} />
+            <UserImage image={user?user.picturePath:null} />
             <Box>
               <Typography
                 variant="h4"
@@ -76,13 +75,13 @@ import {
                   },
                 }}
               >
-                {firstName} {lastName}
+                {user?user.firstName:null} {user?user.lastName:null}
               </Typography>
-              <Typography color={medium}>{friends?friends.length:0} friends</Typography>
+              <Typography color={medium}>{user?user.friends.length:0} friends</Typography>
             </Box>
           </FlexBetween>
-          <ManageAccountsOutlined />
-        </FlexBetween>
+           <ManageAccountsOutlined />
+        </FlexBetween> 
   
         <Divider />
   
@@ -90,11 +89,11 @@ import {
         <Box p="1rem 0">
           <Box display="flex" alignItems="center" gap="1rem" mb="0.5rem">
             <LocationOnOutlined fontSize="large" sx={{ color: main }} />
-            <Typography color={medium}>{location}</Typography>
+            <Typography color={medium}>{user?user.location:null}</Typography>
           </Box>
           <Box display="flex" alignItems="center" gap="1rem">
             <WorkOutlineOutlined fontSize="large" sx={{ color: main }} />
-            <Typography color={medium}>{profession}</Typography>
+            <Typography color={medium}>{user?user.profession:null}</Typography>
           </Box>
         </Box>
   
@@ -105,13 +104,13 @@ import {
           <FlexBetween mb="0.5rem">
             <Typography color={medium}>Who's viewed your profile</Typography>
             <Typography color={main} fontWeight="500">
-              {viewedProfile}
+              {user?user.viewedProfile:null}
             </Typography>
           </FlexBetween>
           <FlexBetween>
             <Typography color={medium}>Impressions of your post</Typography>
             <Typography color={main} fontWeight="500">
-              {impressions}
+              {user?user.impressions:null}
             </Typography>
           </FlexBetween>
         </Box>

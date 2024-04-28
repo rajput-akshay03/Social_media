@@ -41,12 +41,8 @@ const Navbar = () => {
 
   const fullName = "akshay";
   const logout = ()=>{
-       dispatch(setLogout());
-        console.log("hr")
-       useEffect(()=>{
-        console.log("hrr")
-         navigate("/hello");
-       },[])
+         dispatch(setLogout());
+         navigate("/");
   }
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>

@@ -23,6 +23,7 @@ import {
     userPicturePath,
     likes,
     comments,
+    isProfile
   }) => {
     const [isComments, setIsComments] = useState(false);
     const dispatch = useDispatch();
@@ -91,7 +92,7 @@ import {
             height="auto"
             alt="post"
             style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-            src={`http://localhost:3000/api/v1/assets/${picturePath}`}
+            src={`${picturePath}`}
           />
         )}
         <FlexBetween mt="0.25rem">
@@ -113,7 +114,9 @@ import {
               </IconButton>
               <Typography>{comments.length}</Typography>
             <IconButton>
-                 <DeleteIcon onClick={deletePost}/>
+              {
+                  isProfile?<DeleteIcon onClick={deletePost}/>:<div></div>
+              }
             </IconButton>
             </FlexBetween>
           </FlexBetween>

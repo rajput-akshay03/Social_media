@@ -43,14 +43,14 @@ const Form = () => {
     formData.append("location",location);
     formData.append("occupation",occupation);
     formData.append("password",password);
-    // formData.append("picture",picture);
+    formData.append("picture",picture);
     const savedUserResponse = await axios.post(
       `http://localhost:3000/api/v1/auth/register`,
     formData,
       {
         withCredentials: true,
         headers: {
-          "Content-Type":"application/json",
+          "Content-Type":"multipart/form-data",
         },
       }
     )

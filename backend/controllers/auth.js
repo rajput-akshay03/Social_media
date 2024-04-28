@@ -7,9 +7,8 @@ const cloudinary = require("cloudinary");
 exports.signUp= catchAsyncError(async(req,res,next)=>{
         const {firstName,lastName,email,password,friends,location,occupation}  = req.body;
         console.log(firstName);
-        // console.log(req.files);
-        // if(!req.files || Object.keys(req.files).length ===0)
-        //    return next(new errorHandler("photo file required",400));
+        if(!req.files || Object.keys(req.files).length ===0)
+           return next(new errorHandler("photo file required",400));
         if(!firstName||!lastName||!email||!password||!location||!occupation)
                return next(new errorHandler("please provide full details"));
         const isEmailExists= await User.findOne({email});
@@ -17,18 +16,18 @@ exports.signUp= catchAsyncError(async(req,res,next)=>{
         {
             return next(new errorHandler("email already exist"));
         }
-        // const {picture} = req.files;
-        // const allowedFormats = ["image/png","image/jpeg","image/webp"];
-        // if(!allowedFormats.includes(picture.mimetype))
-        //          return next(new errorHandler("Invalid file type. please send resume in PNG , JPG or WEBP format",400));
-        // const cloudinaryResponse = await cloudinary.uploader.upload(
-        //         picture.tempFilePath
-        // );
-        // if(!cloudinaryResponse || cloudinaryResponse.error)
-        // {
-        //    console.error("Cloudinary Error",cloudinaryResponse.error ||" unknown cloudinary error");
-        //    return next(new errorHandler("failed to upload image",400));
-        // }
+        const {picture} = req.files;
+        const allowedFormats = ["image/png","image/jpeg","image/webp"];
+        if(!allowedFormats.includes(picture.mimetype))
+                 return next(new errorHandler("Invalid file type. please send resume in PNG , JPG or WEBP format",400));
+        const cloudinaryResponse = await cloudinary.uploader.upload(
+                picture.tempFilePath
+        );
+        if(!cloudinaryResponse || cloudinaryResponse.error)
+        {
+           console.error("Cloudinary Error",cloudinaryResponse.error ||" unknown cloudinary error");
+           return next(new errorHandler("failed to upload image",400));
+        }
         const salt = await bcrypt.genSalt();
         const passwordHash = await bcrypt.hash(password,salt);
         const user  = await User.create({
@@ -36,7 +35,7 @@ exports.signUp= catchAsyncError(async(req,res,next)=>{
             lastName,
             email,
             password:passwordHash,
-            // picturePath:cloudinaryResponse.secure_url,
+            picturePath:cloudinaryResponse.secure_url,
             friends,
             location,
             profession:occupation,

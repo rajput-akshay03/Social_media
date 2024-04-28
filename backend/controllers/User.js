@@ -33,6 +33,12 @@ exports.getUserFriends=catchAsyncError(async(req,res,next)=>{
 })
 exports.addRemoveFriend=catchAsyncError(async(req,res,next)=>{
        const {id,friendId} = req.params;
+       if(id==friendId)
+          {
+              res.status(200).json({
+                 friends:null
+              })
+          }
        const user =  await User.findById(id);
        const friend = await User.findById(friendId);
        if(user.friends.includes(friendId))

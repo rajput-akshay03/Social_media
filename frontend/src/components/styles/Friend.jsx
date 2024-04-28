@@ -6,10 +6,19 @@ import { setFriends } from "../../state/index";
 import FlexBetween from "../styles/FlexBetween";
 import UserImage from "../styles/userImage";
 import axios from "axios";
+import { useEffect } from "react";
 const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { _id } = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user);
+  useEffect(()=>{
+       if(!user)
+       {
+          navigate("/");
+          return ;
+       }
+  },[])
+  const _id= user._id;
   const token = useSelector((state) => state.token);
   const friends = useSelector((state) => state.user.friends);
   const { palette } = useTheme();

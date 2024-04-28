@@ -1,7 +1,7 @@
 import { Box, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../navbar/index";
 import FriendListWidget from "../widgets/FriendList";
 import MyPostWidget from "../widgets/myPostWidget";
@@ -13,7 +13,6 @@ const ProfilePage = () => {
   const { userId } = useParams();
   const token = useSelector((state) => state.token);
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
-
   const getUser = async () => {
     const response = await axios.get(
       `http://localhost:3000/api/v1/users/${userId}`,
@@ -28,11 +27,16 @@ const ProfilePage = () => {
   };
 
   useEffect(() => {
-    getUser();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  if (!user) return null;
-
+    if(userId)
+    {
+      getUser();
+    }
+    if (!userId) {
+      navigate("/");
+     
+    }
+  }, [userId]); // eslint-disable-line react-hooks/exhaustive-deps
+  const navigate= useNavigate();
   return (
     <Box>
       <Navbar />
@@ -44,7 +48,7 @@ const ProfilePage = () => {
         justifyContent="center"
       >
         <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-          <UserWidget userId={userId} picturePath={user.picturePath} />
+          <UserWidget userId={userId} picturePath={user?user.picturePath:null} />
           <Box m="2rem 0" />
           <FriendListWidget userId={userId} />
         </Box>
@@ -52,7 +56,7 @@ const ProfilePage = () => {
           flexBasis={isNonMobileScreens ? "42%" : undefined}
           mt={isNonMobileScreens ? undefined : "2rem"}
         >
-          <MyPostWidget picturePath={user.picturePath} />
+          <MyPostWidget picturePath={user?user.picturePath:null} />
           <Box m="2rem 0" />
           <PostsWidget userId={userId} isProfile />
         </Box>
