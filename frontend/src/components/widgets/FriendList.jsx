@@ -29,6 +29,7 @@ const FriendListWidget = ({ userId }) => {
       {
         withCredentials: true,
         headers: {
+          "Content-Type":"application/json",
           Authorization:`Bearer ${token}`
         },
       }

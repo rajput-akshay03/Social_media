@@ -15,6 +15,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
         {
           withCredentials: true,
           headers: {
+            "Content-Type":"application/json",
             Authorization:`Bearer ${token}`
           },
         }
@@ -29,6 +30,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
       {
         withCredentials: true,
         headers: {
+          "Content-Type":"application/json",
           Authorization:`Bearer ${token}`
         },
       }
