@@ -16,6 +16,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
           withCredentials: true,
           headers: {
             "Content-Type":"application/json",
+           "Access-Control-Allow-Origin":"*",
             Authorization:`Bearer ${token}`
           },
         }
