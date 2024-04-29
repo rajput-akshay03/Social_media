@@ -57,6 +57,7 @@ import { useNavigate } from "react-router-dom";
           withCredentials: true,
           headers: {
             "Content-Type":"multipart/form-data",
+            "Access-Control-Allow-Origin":"*",
             Authorization:`Bearer ${token}`
           },
         }
