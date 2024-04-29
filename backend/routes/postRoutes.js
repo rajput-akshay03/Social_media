@@ -7,4 +7,4 @@ router.get("/:userId/posts",isAuthorized,getUserPosts);
 router.patch("/:id/like",isAuthorized,likePost);
 router.post("/",isAuthorized,createPost);
 router.delete("/delete/:id",deletePost);
-module.exports=router;
+ module.exports=router;
