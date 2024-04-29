@@ -57,7 +57,7 @@ import { useNavigate } from "react-router-dom";
           withCredentials: true,
           headers: {
             "Content-Type":"multipart/form-data",
-            "Access-Control-Allow-Origin":"*",
+            "Access-Control-Allow-Origin":"https://social-media-two-blond.vercel.app",
             Authorization:`Bearer ${token}`
           },
         }
