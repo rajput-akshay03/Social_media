@@ -12,7 +12,6 @@ const HomePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
    const user = useSelector((state) => state.user);
    const navigate = useNavigate();
- 
    const [_id,set_id] = useState(null);
    const [picturePath,setPictruePath]= useState(null);
    console.log("hey");
