@@ -12,11 +12,12 @@ const cloudinary  = require("./config/cloudinary");
 const fileUpload=require("express-fileupload");
 const bodyParser=require("body-parser");
 cloudinary.cloudinaryconnect();
-app.use(cors({
-     origin:'https://social-media-two-blond.vercel.app', 
-     credentials:true,        
-     optionSuccessStatus:200
- }));
+// app.use(cors({
+//      origin:'https://social-media-two-blond.vercel.app', 
+//      credentials:true,        
+//      optionSuccessStatus:200
+//  }));
+ app.use(cors());
  app.use(express.json());
  app.use(express.urlencoded({extended:true}));
  app.use(fileUpload({
