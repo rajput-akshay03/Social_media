@@ -11,7 +11,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
     // useEffect(async()=>{   
     //   console.log("posts");  
       const response = await axios.get(
-        `http://localhost:3000/api/v1/posts`,
+        `${import.meta.env.VITE_backend_URL}/posts`,
         {
           withCredentials: true,
           headers: {
@@ -25,7 +25,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
 
   const getUserPosts = async () => {
     const response = await axios.get(
-      `http://localhost:3000/api/v1/posts/${userId}/posts`,
+      `${import.meta.env.VITE_backend_URL}/posts/${userId}/posts`,
       {
         withCredentials: true,
         headers: {

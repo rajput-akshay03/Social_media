@@ -25,7 +25,7 @@ const FriendListWidget = ({ userId }) => {
   const [friends,setFriends] = useState(null);
   const getFriends = async () => {
     const response = await axios.get(
-      `http://localhost:3000/api/v1/users/${userId}/friends`,
+      `${import.meta.env.VITE_backend_URL}/users/${userId}/friends`,
       {
         withCredentials: true,
         headers: {

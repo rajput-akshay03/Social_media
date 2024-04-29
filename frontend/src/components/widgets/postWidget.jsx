@@ -36,7 +36,7 @@ import {
     const primary = palette.primary.main;
     const patchLike = async () => {
       const response = await axios.patch(
-        `http://localhost:3000/api/v1/posts/${postId}/like`,
+        `${import.meta.env.VITE_backend_URL}/posts/${postId}/like`,
         {userId: loggedInUserId},
         {
           withCredentials: true,
@@ -62,7 +62,7 @@ import {
         if(check)
         {
           const response = await axios.delete(
-            `http://localhost:3000/api/v1/posts/delete/${postId}`,
+            `${import.meta.env.VITE_backend_URL}/posts/delete/${postId}`,
             {
               withCredentials: true,
               headers: {

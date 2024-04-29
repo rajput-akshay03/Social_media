@@ -51,7 +51,7 @@ import { useNavigate } from "react-router-dom";
       formData.append("description", post);
       formData.append("picture", image);
       const response = await axios.post(
-        `http://localhost:3000/api/v1/posts`,
+        `${import.meta.env.VITE_backend_URL}/posts`,
       formData,
         {
           withCredentials: true,

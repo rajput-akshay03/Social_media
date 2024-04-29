@@ -45,7 +45,7 @@ const Form = () => {
     formData.append("password",password);
     formData.append("picture",picture);
     const savedUserResponse = await axios.post(
-      `http://localhost:3000/api/v1/auth/register`,
+      `${import.meta.env.VITE_backend_URL}/auth/register`,
     formData,
       {
         withCredentials: true,
@@ -71,7 +71,7 @@ const Form = () => {
     //   headers: { "Content-Type": "application/json" },
     // });
     const loggedInResponse = await axios.post(
-      `http://localhost:3000/api/v1/auth/login`,
+      `${import.meta.env.VITE_backend_URL}/auth/login`,
     {email,password},
       {
         withCredentials: true,

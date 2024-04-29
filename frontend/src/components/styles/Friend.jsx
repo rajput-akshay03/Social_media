@@ -45,7 +45,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
     // );
     // console.log(token);
     const response = await axios.patch(
-      `http://localhost:3000/api/v1/users/${_id}/${friendId}`,{},
+      `${import.meta.env.VITE_backend_URL}/users/${_id}/${friendId}`,{},
       {
         withCredentials: true,
         headers: {

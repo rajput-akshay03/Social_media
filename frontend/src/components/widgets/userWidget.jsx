@@ -23,7 +23,7 @@ import {
     const getUser = async () => {
       console.log("heylo");
       const response = await axios.get(
-        `http://localhost:3000/api/v1/users/${userId}`,
+        `${import.meta.env.VITE_backend_URL}/users/${userId}`,
         {
           withCredentials: true,
           headers: {

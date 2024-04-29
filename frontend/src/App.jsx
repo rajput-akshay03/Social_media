@@ -13,6 +13,7 @@ import {themeSettings} from "./theme";
 function App() {
     const mode  = useSelector((state)=>state.mode);
     const theme = useMemo(()=>createTheme(themeSettings(mode)),[mode]);
+    // console.log({import.meta.env.VITE_backend_URL});
   return (
     <>
        <BrowserRouter>

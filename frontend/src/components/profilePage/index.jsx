@@ -15,7 +15,7 @@ const ProfilePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const getUser = async () => {
     const response = await axios.get(
-      `http://localhost:3000/api/v1/users/${userId}`,
+      `${import.meta.env.VITE_backend_URL}/users/${userId}`,
       {
         withCredentials: true,
         headers: {

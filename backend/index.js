@@ -13,7 +13,7 @@ const fileUpload=require("express-fileupload");
 const bodyParser=require("body-parser");
 cloudinary.cloudinaryconnect();
 app.use(cors({
-     origin:'http://localhost:5173', 
+     origin:'https://social-media-two-blond.vercel.app', 
      credentials:true,        
      optionSuccessStatus:200
  }));
