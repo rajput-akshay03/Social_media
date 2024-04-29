@@ -2,21 +2,21 @@ const {catchAsyncError} = require("../controllers/catchAsyncError");
 const {errorHandler}= require("../middlewares/error");
 const Post= require('../models/postSchema');
 const User= require("../models/userSchema");
-const cloudinary = require("cloudinary");
+// const cloudinary = require("cloudinary");
 exports.createPost  = catchAsyncError(async(req,res,next)=>{
           const {userId,description}= req.body;
-          const {picture} = req.files;
-          const allowedFormats = ["image/png","image/jpeg","image/webp"];
-          if(!allowedFormats.includes(picture.mimetype))
-                   return next(new errorHandler("Invalid file type. please send resume in PNG , JPG or WEBP format",400));
-          const cloudinaryResponse = await cloudinary.uploader.upload(
-                  picture.tempFilePath
-          );
-          if(!cloudinaryResponse || cloudinaryResponse.error)
-          {
-             console.error("Cloudinary Error",cloudinaryResponse.error ||" unknown cloudinary error");
-             return next(new errorHandler("failed to upload image",400));
-          }
+        //   const {picture} = req.files;
+        //   const allowedFormats = ["image/png","image/jpeg","image/webp"];
+        //   if(!allowedFormats.includes(picture.mimetype))
+        //            return next(new errorHandler("Invalid file type. please send resume in PNG , JPG or WEBP format",400));
+        //   const cloudinaryResponse = await cloudinary.uploader.upload(
+        //           picture.tempFilePath
+        //   );
+        //   if(!cloudinaryResponse || cloudinaryResponse.error)
+        //   {
+        //      console.error("Cloudinary Error",cloudinaryResponse.error ||" unknown cloudinary error");
+        //      return next(new errorHandler("failed to upload image",400));
+        //   }
           const user = await User.findById(userId);
           const newPost = await Post.create({
               userId,
@@ -24,8 +24,8 @@ exports.createPost  = catchAsyncError(async(req,res,next)=>{
               lastName:user.lastName,
               location:user.location,
               description,
-              userPicturePath:user.picturePath,
-              picturePath:cloudinaryResponse.secure_url,
+              userPicturePath:"user.picturePath",
+              picturePath:"cloudinaryResponse.secure_url",
               likes:{},
               comments:[]
           })
