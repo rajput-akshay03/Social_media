@@ -43,7 +43,7 @@ const Form = () => {
     formData.append("location",location);
     formData.append("occupation",occupation);
     formData.append("password",password);
-    formData.append("picture",picture);
+    // formData.append("picture",picture);
     const savedUserResponse = await axios.post(
       `${import.meta.env.VITE_backend_URL}/auth/register`,
     formData,
